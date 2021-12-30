@@ -1,7 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace VertretungsplanConsole
@@ -81,7 +80,7 @@ namespace VertretungsplanConsole
             Console.WriteLine("Bitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
 
             // Default selected class to -1 so that it is invalid
-            int selectedClass = -1;
+            int selectedClass;
 
             while (true)
             {
@@ -104,16 +103,6 @@ namespace VertretungsplanConsole
             {
                 Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ---> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
             }
-
-            //foreach (var klasse in klassen)
-            //{
-            //    Console.WriteLine(klasse.Name);
-
-            //    foreach (var _vertretung in klasse.Vertretungen)
-            //    {
-            //        Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ---> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
-            //    }
-            //}
 
             // Wait for an input to end the program
             Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
