@@ -10,7 +10,6 @@ namespace VertretungsplanConsole
     {
         public string Name { get; set; }
 
-        // TODO: Make this not null
         public List<Vertretung> Vertretungen { get; set; } = new List<Vertretung>();
 
         public Klasse(string name)
