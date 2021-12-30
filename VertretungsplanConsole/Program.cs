@@ -69,15 +69,45 @@ namespace VertretungsplanConsole
                 }
             }
 
-            foreach (var klasse in klassen)
+            // List all classes
+            for (int i = 0; i < klassen.Count; i++)
             {
-                Console.WriteLine(klasse.Name);
-
-                foreach (var _vertretung in klasse.Vertretungen)
-                {
-                    Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ------> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
-                }
+                Console.WriteLine($"{i}: {klassen[i].Name}");
             }
+
+            Console.WriteLine("Bitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
+
+            // Default selected class to -1 so that it is invalid
+            int selectedClass = -1;
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                // TODO: Rewrite the condition so that entries that are out of range are also handled.
+                if (!int.TryParse(input, out selectedClass) && selectedClass > 0 && selectedClass < klassen.Count)
+                    Console.WriteLine("Bitte eine gültige Zahl eingeben");
+                else
+                    break;
+            }
+
+            foreach (var _vertretung in klassen[selectedClass].Vertretungen)
+            {
+                Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ---> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
+            }
+
+            //foreach (var klasse in klassen)
+            //{
+            //    Console.WriteLine(klasse.Name);
+
+            //    foreach (var _vertretung in klasse.Vertretungen)
+            //    {
+            //        Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ---> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
+            //    }
+            //}
+
+            Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
+            Console.ReadKey();
         }
     }
 }
