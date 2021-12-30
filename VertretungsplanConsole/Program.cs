@@ -37,10 +37,10 @@ namespace VertretungsplanConsole
             {
                 // Check if the row is a table heading
                 if (row.InnerHtml.Replace(" ", string.Empty).StartsWith("<th") && row.InnerText.Replace(" ", string.Empty) != "TrainRaum")
-                {
                     // Create a new klasse and set the content of the table as the name
                     klassen.Add(new Klasse(row.InnerText.Replace(" ", string.Empty)));
-                }
+                else if (row.InnerText.Replace(" ", string.Empty) == "TrainRaum")
+                    break;
                 else
                 {
                     foreach (var node in row.ChildNodes)
