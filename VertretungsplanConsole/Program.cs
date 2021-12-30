@@ -27,21 +27,25 @@ namespace VertretungsplanConsole
             // Select all rows in the table
             var rows = vertretungsplan.SelectNodes("tr");
 
-            // Create a new 
+            // Create a new list of Klassen
             var klassen = new List<Klasse>();
 
+            // Create a new instance of Vertretung
             var vertretung = new Vertretung();
 
             foreach (var row in rows)
             {
+                // Check if the row is a table heading
                 if (row.InnerHtml.Replace(" ", string.Empty).StartsWith("<th") && row.InnerText.Replace(" ", string.Empty) != "TrainRaum")
                 {
+                    // Create a new klasse and set the content of the table as the name
                     klassen.Add(new Klasse(row.InnerText.Replace(" ", string.Empty)));
                 }
                 else
                 {
                     foreach (var node in row.ChildNodes)
                     {
+                        // Add the content of the Vertretungsplan to vertretung
                         if (node.InnerHtml.Contains("class=\"Eins\""))
                         {
                             vertretung.Stunde = node.InnerText;
@@ -60,10 +64,10 @@ namespace VertretungsplanConsole
                         }
                     }
 
-
+                    // Add the variable vertretung to the last class of the list
                     klassen.Last().Vertretungen.Add(vertretung);
 
-                    // TODO: Empty the variable without wiping it in the class
+                    // Whipe the data from vertretung
                     vertretung = new Vertretung();
                 }
             }
@@ -81,16 +85,21 @@ namespace VertretungsplanConsole
 
             while (true)
             {
+                // Get input from the user
                 string input = Console.ReadLine();
 
+                // Try to parse to input into an integer
                 if (!int.TryParse(input, out selectedClass))
                     Console.WriteLine("Bitte eine gültige Zahl eingeben");
+                // Check if the input is in the given range
                 else if (selectedClass < 0 || selectedClass > klassen.Count)
                     Console.WriteLine("Bitte eine gültige Zahl eingeben");
+                // Exit the loop
                 else
                     break;
             }
 
+            // List all the Vertretungen for the selected class
             foreach (var _vertretung in klassen[selectedClass].Vertretungen)
             {
                 Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ---> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
@@ -106,6 +115,7 @@ namespace VertretungsplanConsole
             //    }
             //}
 
+            // Wait for an input to end the program
             Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
             Console.ReadKey();
         }
