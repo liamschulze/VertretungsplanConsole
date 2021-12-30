@@ -1,5 +1,4 @@
-﻿using AngleSharp.Common;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -84,8 +83,9 @@ namespace VertretungsplanConsole
             {
                 string input = Console.ReadLine();
 
-                // TODO: Rewrite the condition so that entries that are out of range are also handled.
-                if (!int.TryParse(input, out selectedClass) && selectedClass > 0 && selectedClass < klassen.Count)
+                if (!int.TryParse(input, out selectedClass))
+                    Console.WriteLine("Bitte eine gültige Zahl eingeben");
+                else if (selectedClass < 0 || selectedClass > klassen.Count)
                     Console.WriteLine("Bitte eine gültige Zahl eingeben");
                 else
                     break;
