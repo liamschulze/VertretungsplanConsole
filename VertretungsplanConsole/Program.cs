@@ -20,7 +20,7 @@ namespace VertretungsplanConsole
 
             Console.WriteLine("Bitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
 
-            // Default selected class to -1 so that it is invalid
+            // Initialize the selected class variable
             int selectedClass;
 
             while (true)
@@ -33,7 +33,7 @@ namespace VertretungsplanConsole
                     Console.WriteLine("Bitte eine gültige Zahl eingeben");
                 // Check if the input is in the given range
                 else if (selectedClass < 0 || selectedClass > klassen.Count)
-                    Console.WriteLine("Bitte eine gültige Zahl eingeben");
+                    Console.WriteLine("Bitte eine Zahl eingeben, die sich im angegebenen Bereich befindet.");
                 // Exit the loop
                 else
                     break;
