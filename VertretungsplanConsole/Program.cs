@@ -4,12 +4,13 @@ namespace VertretungsplanConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             // Set the URL
             string[] urls = { "http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/1/vp.html", "http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/2/vp.html" };
 
             Console.WriteLine("0: Vertretungsplan heute\n1: Vertretungsplan morgen");
+            Console.WriteLine("Bitte wählen Sie einen Tag aus");
 
             int selectedDay;
 
@@ -32,6 +33,13 @@ namespace VertretungsplanConsole
 
             // Parse the Vertretungsplan and write the data to the variable
             var klassen = VertretungsplanParser.ParseVertretungsplan(url);
+
+            if (klassen.Count == 0)
+            {
+                Console.WriteLine("Es ist noch kein Vertretungsplan vorhanden");
+
+                return 1;
+            }
 
             // List all classes
             for (int i = 0; i < klassen.Count; i++)
@@ -69,6 +77,8 @@ namespace VertretungsplanConsole
             // Wait for an input to end the program
             Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
             Console.ReadKey();
+
+            return 0;
         }
     }
 }
