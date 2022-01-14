@@ -7,7 +7,28 @@ namespace VertretungsplanConsole
         static void Main(string[] args)
         {
             // Set the URL
-            var url = @"http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/1/vp.html";
+            string[] urls = { "http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/1/vp.html", "http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/2/vp.html" };
+
+            Console.WriteLine("0: Vertretungsplan heute\n1: Vertretungsplan morgen");
+
+            int selectedDay;
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                // Try to parse to input into an integer
+                if (!int.TryParse(input, out selectedDay))
+                    Console.WriteLine("Bitte eine gültige Zahl eingeben");
+                // Check if the input is in the given range
+                else if (selectedDay != 0 && selectedDay != 1)
+                    Console.WriteLine("Bitte eine Zahl eingeben, die sich im angegebenen Bereich befindet.");
+                // Exit the loop
+                else
+                    break;
+            }
+
+            string url = selectedDay == 0 ? urls[0] : urls[1];
 
             // Parse the Vertretungsplan and write the data to the variable
             var klassen = VertretungsplanParser.ParseVertretungsplan(url);
@@ -26,10 +47,10 @@ namespace VertretungsplanConsole
             while (true)
             {
                 // Get input from the user
-                string input = Console.ReadLine();
+                string input1 = Console.ReadLine();
 
                 // Try to parse to input into an integer
-                if (!int.TryParse(input, out selectedClass))
+                if (!int.TryParse(input1, out selectedClass))
                     Console.WriteLine("Bitte eine gültige Zahl eingeben");
                 // Check if the input is in the given range
                 else if (selectedClass < 0 || selectedClass > klassen.Count)
