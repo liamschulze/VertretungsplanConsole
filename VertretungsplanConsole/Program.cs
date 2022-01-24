@@ -29,14 +29,18 @@ namespace VertretungsplanConsole
                     break;
             }
 
+            Console.WriteLine("==============================================");
+
             string url = selectedDay == 0 ? urls[0] : urls[1];
 
             // Parse the Vertretungsplan and write the data to the variable
             var klassen = VertretungsplanParser.ParseVertretungsplan(url);
 
+            // Terminate the program if no plan is found
             if (klassen.Count == 0)
             {
                 Console.WriteLine("Es ist noch kein Vertretungsplan vorhanden");
+                Console.ReadKey();
 
                 return 1;
             }
@@ -47,7 +51,7 @@ namespace VertretungsplanConsole
                 Console.WriteLine($"{i}: {klassen[i].Name}");
             }
 
-            Console.WriteLine("Bitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
+            Console.WriteLine("\nBitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
 
             // Initialize the selected class variable
             int selectedClass;
@@ -67,6 +71,8 @@ namespace VertretungsplanConsole
                 else
                     break;
             }
+
+            Console.WriteLine("==============================================");
 
             // List all the Vertretungen for the selected class
             foreach (var _vertretung in klassen[selectedClass].Vertretungen)
