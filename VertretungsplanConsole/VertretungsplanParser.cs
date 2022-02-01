@@ -27,6 +27,10 @@ namespace VertretungsplanConsole
             // Create a new instance of Vertretung
             var vertretung = new Vertretung();
 
+            // If there aren't any nodes return an empty object
+            if (nodes == null)
+                return klassen;
+
             for (int i = 0; i < nodes.Count; i++)
             {
                 try
@@ -56,15 +60,15 @@ namespace VertretungsplanConsole
                                 }
                                 else if (node.InnerHtml.Contains("class=\"Zwei\""))
                                 {
-                                    vertretung.LehrerUndFach = node.InnerText;
+                                    vertretung.LehrerUndFach = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
                                 }
                                 else if (node.InnerHtml.Contains("class=\"Vier\""))
                                 {
-                                    vertretung.VertretungsLehrer = node.InnerText;
+                                    vertretung.VertretungsLehrer = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
                                 }
                                 else if (node.InnerHtml.Contains("class=\"Fuenf\""))
                                 {
-                                    vertretung.Message = node.InnerText.Replace("&auml;", "ä");
+                                    vertretung.Message = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
                                 }
                             }
 

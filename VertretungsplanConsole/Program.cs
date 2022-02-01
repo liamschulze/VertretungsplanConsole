@@ -40,6 +40,7 @@ namespace VertretungsplanConsole
             if (klassen.Count == 0)
             {
                 Console.WriteLine("Es ist noch kein Vertretungsplan vorhanden");
+                Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
                 Console.ReadKey();
 
                 return 1;
