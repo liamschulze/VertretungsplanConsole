@@ -41,10 +41,15 @@ namespace VertretungsplanConsole
                     // Select all rows in the table
                     var rows = vertretungsplan.SelectNodes("tr");
 
+                    if (rows == null)
+                        rows = vertretungsplan.SelectNodes("tbody/tr");
+
                     foreach (var row in rows)
                     {
+                        row.InnerHtml = row.InnerHtml.Replace("\n", string.Empty);
+
                         // Check if the row is a table heading
-                        if (row.InnerHtml.Replace(" ", string.Empty).StartsWith("<th") && row.InnerText.Replace(" ", string.Empty) != "TrainRaum")
+                        if (row.InnerHtml.Replace(" ", string.Empty).Contains("<th") && row.InnerText.Replace(" ", string.Empty) != "TrainRaum")
                             // Create a new klasse and set the content of the table as the name
                             klassen.Add(new Klasse(row.InnerText.Replace(" ", string.Empty)));
                         else if (row.InnerText.Replace(" ", string.Empty) == "TrainRaum")
@@ -53,22 +58,24 @@ namespace VertretungsplanConsole
                         {
                             foreach (var node in row.ChildNodes)
                             {
+                                node.InnerHtml = node.InnerHtml.Replace("\n", string.Empty);
+
                                 // Add the content of the Vertretungsplan to vertretung
                                 if (node.InnerHtml.Contains("class=\"Eins\""))
                                 {
-                                    vertretung.Stunde = node.InnerText;
+                                    vertretung.Stunde = node.InnerText.Trim();
                                 }
                                 else if (node.InnerHtml.Contains("class=\"Zwei\""))
                                 {
-                                    vertretung.LehrerUndFach = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
+                                    vertretung.LehrerUndFach = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Trim();
                                 }
                                 else if (node.InnerHtml.Contains("class=\"Vier\""))
                                 {
-                                    vertretung.VertretungsLehrer = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
+                                    vertretung.VertretungsLehrer = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Trim();
                                 }
                                 else if (node.InnerHtml.Contains("class=\"Fuenf\""))
                                 {
-                                    vertretung.Message = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
+                                    vertretung.Message = node.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Trim();
                                 }
                             }
 
