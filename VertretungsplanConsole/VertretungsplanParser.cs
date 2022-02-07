@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace VertretungsplanConsole
 {
@@ -16,7 +17,20 @@ namespace VertretungsplanConsole
             // Create a new instance of HtmlWeb
             HtmlWeb web = new HtmlWeb();
 
-            var htmlDoc = web.Load(url);
+            HtmlDocument htmlDoc;
+
+            try
+            {
+                htmlDoc = web.Load(url);
+            }
+            catch
+            {
+                // Write an error message if no connection can be established and end the program
+                Console.WriteLine("Es konnte keine Verbindung zum Sever hergestellt werden. \nBitte überprüfen Sie ihre Internetverbindung oder warten Sie ein paar Minuten.");
+                Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
+                Console.ReadLine();
+                return new List<Klasse>();
+            }
 
             // Select the tables from the Document
             var nodes = htmlDoc.DocumentNode.SelectNodes("//body/table");
