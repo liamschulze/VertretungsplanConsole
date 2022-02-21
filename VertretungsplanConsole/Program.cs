@@ -37,8 +37,10 @@ namespace VertretungsplanConsole
             // Parse the Vertretungsplan and write the data to the variable
             var klassen = VertretungsplanParser.ParseVertretungsplan(url);
 
+            if (klassen == null)
+                return -1;
             // Terminate the program if no plan is found
-            if (klassen.Count == 0)
+            else if (klassen.Count == 0)
             {
                 Console.WriteLine("Es ist noch kein Vertretungsplan vorhanden");
                 Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
@@ -52,6 +54,10 @@ namespace VertretungsplanConsole
             {
                 Console.WriteLine($"{i}: {klassen[i].Name}");
             }
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(VertretungsplanParser.ParseInformation(url));
+            Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.WriteLine("\nBitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
 

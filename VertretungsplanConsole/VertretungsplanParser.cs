@@ -29,7 +29,7 @@ namespace VertretungsplanConsole
                 Console.WriteLine("Es konnte keine Verbindung zum Sever hergestellt werden. \nBitte überprüfen Sie ihre Internetverbindung oder warten Sie ein paar Minuten.");
                 Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
                 Console.ReadLine();
-                return new List<Klasse>();
+                return null;
             }
 
             // Select the tables from the Document
@@ -108,6 +108,34 @@ namespace VertretungsplanConsole
             }
 
             return klassen;
+        }
+
+        public static string ParseInformation(string url)
+        {
+            // Create a new instance of HtmlWeb
+            HtmlWeb web = new HtmlWeb();
+
+            HtmlDocument htmlDoc;
+
+            try
+            {
+                htmlDoc = web.Load(url);
+            }
+            catch
+            {
+                // Write an error message if no connection can be established and end the program
+                Console.WriteLine("Es konnte keine Verbindung zum Sever hergestellt werden. \nBitte überprüfen Sie ihre Internetverbindung oder warten Sie ein paar Minuten.");
+                Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
+                Console.ReadLine();
+                return null;
+            }
+
+            var text = htmlDoc.DocumentNode.SelectNodes("//body/big/big");
+
+            if (text == null)
+                return string.Empty;
+
+            return text[0].InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Replace("*innen", string.Empty).Replace("&szlig;", "ß").Replace("&nbsp;", string.Empty).Trim();
         }
     }
 }
