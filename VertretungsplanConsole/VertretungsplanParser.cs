@@ -7,30 +7,31 @@ namespace VertretungsplanConsole
 {
     public class VertretungsplanParser
     {
+        #region Private fields
+
+        private string _url = string.Empty;
+
+        #endregion
+
+        #region Constructor
+
+        public VertretungsplanParser(string url)
+        {
+            _url = url;
+        }
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Parses the Vertretungsplan
         /// </summary>
-        /// <param name="url">The url to the Vertretungsplan</param>
         /// <returns>The parsed data</returns>
-        public static List<Klasse> ParseVertretungsplan(string url)
+        public List<Klasse> ParseVertretungsplan()
         {
-            // Create a new instance of HtmlWeb
-            HtmlWeb web = new HtmlWeb();
-
-            HtmlDocument htmlDoc;
-
-            try
-            {
-                htmlDoc = web.Load(url);
-            }
-            catch
-            {
-                // Write an error message if no connection can be established and end the program
-                Console.WriteLine("Es konnte keine Verbindung zum Sever hergestellt werden. \nBitte überprüfen Sie ihre Internetverbindung oder warten Sie ein paar Minuten.");
-                Console.WriteLine("Bitte drücken Sie eine beliebige Taste, um das Programm zu beenden...");
-                Console.ReadLine();
-                return null;
-            }
+            // Load the html document
+            var htmlDoc = LoadHtml();
 
             // Select the tables from the Document
             var nodes = htmlDoc.DocumentNode.SelectNodes("//body/table");
@@ -110,7 +111,48 @@ namespace VertretungsplanConsole
             return klassen;
         }
 
-        public static string ParseInformation(string url)
+
+        /// <summary>
+        /// Gets important information about the shool day
+        /// </summary>
+        /// <returns>information</returns>
+        public string ParseInformation()
+        {
+            // Load the html document
+            var htmlDoc = LoadHtml();
+
+            var text = htmlDoc.DocumentNode.SelectNodes("//body/big/big");
+
+            if (text == null)
+                return string.Empty;
+
+            return text[0].InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Replace("*innen", string.Empty).Replace("&szlig;", "ß").Replace("&nbsp;", string.Empty).Trim();
+        }
+
+        /// <summary>
+        /// Gets the date of the selected plan
+        /// </summary>
+        /// <returns>The date of the plan</returns>
+        public string parseDate()
+        {
+            // Load the html document
+            var htmlDoc = LoadHtml();
+
+            // Get the date from the plan
+            var date = htmlDoc.DocumentNode.SelectSingleNode("//body/h3[2]");
+
+            return date.InnerText.Replace("&uuml;", "ü");
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Loads the html document
+        /// </summary>
+        /// <returns>the html document</returns>
+        private HtmlDocument LoadHtml()
         {
             // Create a new instance of HtmlWeb
             HtmlWeb web = new HtmlWeb();
@@ -119,7 +161,9 @@ namespace VertretungsplanConsole
 
             try
             {
-                htmlDoc = web.Load(url);
+                htmlDoc = web.Load(_url);
+
+                return htmlDoc;
             }
             catch
             {
@@ -129,13 +173,8 @@ namespace VertretungsplanConsole
                 Console.ReadLine();
                 return null;
             }
-
-            var text = htmlDoc.DocumentNode.SelectNodes("//body/big/big");
-
-            if (text == null)
-                return string.Empty;
-
-            return text[0].InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Replace("*innen", string.Empty).Replace("&szlig;", "ß").Replace("&nbsp;", string.Empty).Trim();
         }
+
+        #endregion
     }
 }

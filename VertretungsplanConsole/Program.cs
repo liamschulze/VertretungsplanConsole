@@ -32,10 +32,14 @@ namespace VertretungsplanConsole
 
             Console.WriteLine("==============================================");
 
+
             string url = selectedDay == 0 ? urls[0] : urls[1];
 
+            // Create new instance of VertretungsplanParser
+            var vertretungsplanParser = new VertretungsplanParser(url);
+
             // Parse the Vertretungsplan and write the data to the variable
-            var klassen = VertretungsplanParser.ParseVertretungsplan(url);
+            var klassen = vertretungsplanParser.ParseVertretungsplan();
 
             if (klassen == null)
                 return -1;
@@ -55,8 +59,13 @@ namespace VertretungsplanConsole
                 Console.WriteLine($"{i}: {klassen[i].Name}");
             }
 
+            Console.WriteLine("==============================================");
+
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(VertretungsplanParser.ParseInformation(url));
+            Console.WriteLine(vertretungsplanParser.ParseInformation());
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine();
+            Console.WriteLine(vertretungsplanParser.parseDate());
             Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.WriteLine("\nBitte wählen sie eine Klasse aus, indem Sie die Nummer eingeben, die davor steht...");
