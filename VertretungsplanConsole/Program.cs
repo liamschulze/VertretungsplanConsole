@@ -9,7 +9,7 @@ namespace VertretungsplanConsole
             // Set the URL
             string[] urls = { "http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/1/vp.html", "http://www.kleist-schule.de/vertretungsplan/schueler/aktuelle%20plaene/2/vp.html" };
 
-            Console.WriteLine("0: Vertretungsplan heute\n1: Vertretungsplan morgen");
+            Console.WriteLine("0: Vertretungsplan heute\n1: Vertretungsplan nächster Schultag");
             Console.WriteLine("Bitte wählen Sie einen Tag aus, indem Sie die Nummer eingeben, die davor steht...");
 
             int selectedDay;

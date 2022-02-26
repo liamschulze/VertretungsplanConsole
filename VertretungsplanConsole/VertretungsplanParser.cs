@@ -101,6 +101,8 @@ namespace VertretungsplanConsole
                             vertretung = new Vertretung();
                         }
                     }
+
+                    break;
                 }
                 catch
                 {
