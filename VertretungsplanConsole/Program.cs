@@ -53,6 +53,18 @@ namespace VertretungsplanConsole
                 return 1;
             }
 
+            // List missing teachers
+            var fehlendeLehrer = vertretungsplanParser.ParseFehlendeLehrer();
+
+            Console.WriteLine("Fehlende Lehrer");
+
+            foreach (var fehlenderLehrer in fehlendeLehrer)
+            {
+                Console.WriteLine(fehlenderLehrer);
+            }
+
+            Console.WriteLine("==============================================");
+
             // List all classes
             for (int i = 0; i < klassen.Count; i++)
             {

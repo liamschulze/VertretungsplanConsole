@@ -113,6 +113,45 @@ namespace VertretungsplanConsole
             return klassen;
         }
 
+        public List<string> ParseFehlendeLehrer()
+        {
+            // Load html
+            var htmlDoc = LoadHtml();
+
+            // Select the table with the missing teachers
+            var node = htmlDoc.DocumentNode.SelectSingleNode("//body/table[1]");
+
+            // Select all rows
+            var rows = node.SelectNodes("tbody/tr");
+
+            // initialize the string that gets returned
+            List<string> fehlendeLehrer = new List<string>();
+
+            foreach (var row in rows)
+            {
+                // Remove all new lines
+                row.InnerHtml = row.InnerHtml.Replace("\n", string.Empty);
+
+                // Add Umlaute
+                row.InnerHtml = row.InnerHtml.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü");
+
+                // Select the divs in the row
+                var divs = row.SelectNodes("td/div");
+
+
+                if (divs.Count == 4)
+                {
+                    fehlendeLehrer.Add($"{divs[0].InnerText}   {divs[1].InnerText}");
+                    fehlendeLehrer.Add($"{divs[2].InnerText}   {divs[3].InnerText}");
+                }
+                else if (divs.Count == 2)
+                {
+                    fehlendeLehrer.Add($"{divs[0].InnerText}   {divs[1].InnerText}");
+                }
+            }
+
+            return fehlendeLehrer;
+        }
 
         /// <summary>
         /// Gets important information about the shool day
