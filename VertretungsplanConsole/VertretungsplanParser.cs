@@ -124,6 +124,11 @@ namespace VertretungsplanConsole
             // Select all rows
             var rows = node.SelectNodes("tbody/tr");
 
+            if (rows == null)
+            {
+                rows = node.SelectNodes("tr");
+            }
+
             // initialize the string that gets returned
             List<string> fehlendeLehrer = new List<string>();
 
