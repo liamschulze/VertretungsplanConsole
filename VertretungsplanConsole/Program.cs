@@ -41,15 +41,12 @@ namespace VertretungsplanConsole
                        break;
                     case 5:
                         // Programm beenden
-                        return 1;
+                        return 0;
                     default:
                         Console.WriteLine("Bitte eine Zahl eingeben, die sich im angegebenen Bereich befindet.\n");
                         break;
                 }
             }
-
-            // Programm beenden
-            return 0;
         }
 
         public static void PrintInformation()
