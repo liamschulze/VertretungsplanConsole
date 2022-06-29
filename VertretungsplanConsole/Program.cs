@@ -118,7 +118,7 @@ namespace VertretungsplanConsole
             Console.WriteLine("==============================================");
 
             // List all the Vertretungen for the selected class
-            foreach (var _vertretung in klassen[selectedClass].Vertretungen)
+            foreach (var _vertretung in klassen[selectedClass - 1].Vertretungen)
             {
                 Console.WriteLine($"{_vertretung.Stunde} {_vertretung.LehrerUndFach} ---> {_vertretung.VertretungsLehrer} {_vertretung.Message}");
             }
