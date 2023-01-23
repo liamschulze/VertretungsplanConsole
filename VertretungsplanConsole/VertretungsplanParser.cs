@@ -250,12 +250,19 @@ namespace VertretungsplanConsole
             // Load the html document
             var htmlDoc = LoadHtml();
 
-            var text = htmlDoc.DocumentNode.SelectNodes("//body/big/big");
+            var text = htmlDoc.DocumentNode.SelectNodes("//body/big");
 
             if (text == null)
                 return string.Empty;
 
-            return text[0].InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Replace("*innen", string.Empty).Replace("&szlig;", "ß").Replace("&nbsp;", string.Empty).Trim();
+            string returnString = "";
+
+            foreach (var info in text)
+            {
+                returnString += info.InnerText.Replace("&auml;", "ä").Replace("&ouml;", "ö").Replace("&uuml;", "ü").Replace("*innen", string.Empty).Replace("&szlig;", "ß").Replace("&nbsp;", string.Empty).Trim() + "\n";
+            }
+
+            return returnString;
         }
 
         /// <summary>
